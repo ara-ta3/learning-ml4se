@@ -8,7 +8,7 @@ run:
 	$(MAKE) __command command='jupyter notebook'
 
 init:
-	test -n $(virtualenv) && $(virtualenv) -p python3 $(envdir)
+	test -n $(virtualenv) && $(virtualenv) -p python2.7 $(envdir)
 
 install:
 	test -f $(requirements) && $(MAKE) __command command='pip install -r $(requirements)'
