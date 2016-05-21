@@ -1,19 +1,18 @@
-virtualenv=$(shell which virtualenv)
-envdir=./env
-requirements=./requirements.txt
+.PHONY: requirements.txt
 
-all:init install
+run: env/bin/jupyter
+	$< notebook
 
-run:
-	$(MAKE) __command command='jupyter notebook'
-
-init:
-	test -n $(virtualenv) && $(virtualenv) -p python2.7 $(envdir)
+git-submodule:
 	git submodule init
-
-install:
-	test -f $(requirements) && $(MAKE) __command command='pip install -r $(requirements)'
 	git submodule update
 
-__command:
-	env PATH=$(envdir)/bin:$(PATH) $(command)
+env/bin/jupyter: requirements.txt
+
+requirements.txt: env/bin/pip
+	$< install -r $@
+
+env/bin/pip: env/bin
+
+env/bin:
+	virtualenv -p python3 env
