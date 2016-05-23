@@ -16,3 +16,7 @@ env/bin/pip: env/bin
 
 env/bin:
 	virtualenv -p python3 env
+
+clean:
+	rm -rf env
+	mkdir -p env
