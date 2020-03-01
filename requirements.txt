@@ -1,4 +1,7 @@
-jupyter
+jupyterlab
+jupyter-lsp
+python-language-server[all]
+
 numpy
 scipy
 matplotlib

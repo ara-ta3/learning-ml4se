@@ -1,22 +1,20 @@
-.PHONY: requirements.txt
+PYTHON=python3
 
-run: env/bin/jupyter
-	$< notebook
+.PHONY: venv
 
-git-submodule:
+run: venv/bin/activate
+	. $<; jupyter lab
+
+git/submodule:
 	git submodule init
 	git submodule update
 
-env/bin/jupyter: requirements.txt
+install: venv/bin/activate git/submodule
+	. $<; pip install -r requirements.txt
+	. $<; jupyter labextension install @krassowski/jupyterlab-lsp
 
-requirements.txt: env/bin/pip
-	$< install -r $@
-
-env/bin/pip: env/bin
-
-env/bin:
-	virtualenv -p python3 env
+venv/bin/activate:
+	$(PYTHON) -m venv venv
 
 clean:
-	rm -rf env
-	mkdir -p env
+	rm -rf venv
